@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Text Display</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comic+Sans+MS">
+    <style>
+        #output {
+            margin-top: 20px;
+        }
+        hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 0;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+</br>
+	
+    <label for="userInput">Enter text:</label>
+    <input type="text" id="userInput" placeholder="Type something..." oninput="updateText()">
+</br>
+	</br>
+    <label for="fontSize">Select Font Size:</label>
+    <select id="fontSize" onchange="changeFontSize()">
+        <option value="14px">Small</option>
+        <option value="18px">Medium</option>
+        <option value="24px">Large</option>
+    </select>
+</br>
+	</br>
+    <label for="fontFamily">Select Font Family:</label>
+    <select id="fontFamily" onchange="changeFontFamily()">
+        <option value="'Comic Sans MS', sans-serif">Comic Sans MS</option>
+        <option value="Arial, sans-serif">Arial</option>
+        <option value="'Courier New', monospace">Courier New</option>
+        
+        <!-- Add more font options as needed -->
+    </select>
+	</br>
+	</br>
+<label for="bold">Bold:</label>
+    <input type="checkbox" id="bold" onchange="toggleBold()">
+
+    <label for="italic">Italic:</label>
+    <input type="checkbox" id="italic" onchange="toggleItalic()">
+
+    <hr>
+
+    
+    <div id="output"></div>
+
+    <script>
+        // Retrieve stored values on page load
+        document.getElementById("userInput").value = localStorage.getItem("userInput") || "";
+        document.getElementById("fontSize").value = localStorage.getItem("fontSize") || "14px";
+        document.getElementById("fontFamily").value = localStorage.getItem("fontFamily") || "'Comic Sans MS', sans-serif";
+        document.getElementById("output").textContent = localStorage.getItem("userInput") || "";
+        document.getElementById("output").style.fontSize = localStorage.getItem("fontSize") || "14px";
+        document.getElementById("output").style.fontFamily = localStorage.getItem("fontFamily") || "'Comic Sans MS', sans-serif";
+        document.getElementById("bold").checked = localStorage.getItem("bold") === "true";
+        document.getElementById("italic").checked = localStorage.getItem("italic") === "true";
+        applyTextStyles();
+
+        function updateText() {
+            var userInput = document.getElementById("userInput").value;
+            var outputDiv = document.getElementById("output");
+            outputDiv.textContent = userInput;
+
+            // Store entered text in localStorage
+            localStorage.setItem("userInput", userInput);
+        }
+
+        function changeFontSize() {
+            var selectedSize = document.getElementById("fontSize").value;
+            var outputDiv = document.getElementById("output");
+            outputDiv.style.fontSize = selectedSize;
+
+            // Store font size in localStorage
+            localStorage.setItem("fontSize", selectedSize);
+        }
+
+        function changeFontFamily() {
+            var selectedFontFamily = document.getElementById("fontFamily").value;
+            var outputDiv = document.getElementById("output");
+            outputDiv.style.fontFamily = selectedFontFamily;
+
+            // Store font family in localStorage
+            localStorage.setItem("fontFamily", selectedFontFamily);
+        }
+
+        function toggleBold() {
+            var isBold = document.getElementById("bold").checked;
+            var outputDiv = document.getElementById("output");
+            outputDiv.style.fontWeight = isBold ? "bold" : "normal";
+
+            // Store bold state in localStorage
+            localStorage.setItem("bold", isBold);
+        }
+
+        function toggleItalic() {
+            var isItalic = document.getElementById("italic").checked;
+            var outputDiv = document.getElementById("output");
+            outputDiv.style.fontStyle = isItalic ? "italic" : "normal";
+
+            // Store italic state in localStorage
+            localStorage.setItem("italic", isItalic);
+        }
+
+        function applyTextStyles() {
+            toggleBold();
+            toggleItalic();
+        }
+    </script>
+
+</body>
+</html>
